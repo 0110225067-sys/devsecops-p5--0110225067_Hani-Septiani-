@@ -1,10 +1,14 @@
+
 name: DevSecOps CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -16,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install Dependencies
         run: |
@@ -25,7 +29,7 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          pytest --verbose
+          python -m pytest --verbose
 
   sast-scan:
     runs-on: ubuntu-latest
@@ -37,7 +41,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install SAST Tool (Bandit)
         run: |
@@ -45,5 +49,4 @@ jobs:
           pip install bandit
 
       - name: Run Bandit SAST Scan
-        run: |
-          run: bandit -r app -f txt
+        run: bandit -r app -f txt
