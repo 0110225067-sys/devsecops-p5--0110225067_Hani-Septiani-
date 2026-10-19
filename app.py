@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, request
 from config import Config
 from models import Item
@@ -32,5 +33,7 @@ def get_discounted_price():
         return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
-    # Binding hanya ke localhost untuk pengujian lokal aman
-    app.run(host='127.0.0.1', port=5000)
+    # Membaca host dan port dari environment, dengan default localhost (127.0.0.1)
+    host = os.environ.get('HOST', '127.0.0.1')
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host=host, port=port)
